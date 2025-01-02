@@ -1,17 +1,20 @@
-const express = require ("express")
-const app = express()
-const morgan = require ( "morgan" )
-const connectDB = require("./config/db")
+const express = require("express");
+const dotenv = require("dotenv");
+const connectDB = require("./config/database");
 
+const userRoutes = require("./routes/userRoutes");
+const affiliateRoutes = require("./routes/affiliateRoutes");
+const investmentRoutes = require("./routes/investmentRoutes");
 
-// Middleware
+dotenv.config();
+connectDB();
 
-// app.use(express.json())
-// app.use(morgan('dev'))
+const app = express();
 
-//Database middleware
-connectDB()
+app.use(express.json());
 
-// Routes
+app.use("/api/users", userRoutes);
+app.use("/api/affiliate", affiliateRoutes);
+app.use("/api/investments", investmentRoutes);
 
-module.exports = app
+module.exports = app;
